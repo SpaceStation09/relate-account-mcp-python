@@ -20,7 +20,7 @@ uv pip install -r requirements.txt
   uv run relate-account.py
 ```
 
-server此时可通过 http 被链接：http://127.0.0.1:8000/relate-account/，你可以在上一步中的ui中通过 streamable HTTP的方式去连接到mcp 并进行测试。
+server此时可通过 http 被链接：`http://127.0.0.1:8000/relate-account/`，你可以在上一步中的ui中通过 streamable HTTP的方式去连接到mcp 并进行测试。
 
 
 ## Future Work
