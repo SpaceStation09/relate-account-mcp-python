@@ -78,3 +78,29 @@ query QUERY_PROFILE($platform: Platform!, $identity: String!) {
 	}
 }
 '''
+
+INTROSPECTION_QUERY = '''
+query {
+  __schema {
+    queryType {
+      name
+    }
+    types {
+      name
+      kind
+      fields {
+        name
+        description
+        type {
+          name
+          kind
+          ofType {
+            name
+            kind
+          }
+        }
+      }
+    }
+  }
+}
+'''
