@@ -10,6 +10,14 @@
 
 ## Usage
 
+### Installing via Smithery
+
+To install Relate Account Python Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@SpaceStation09/relate-account-mcp-python):
+
+```bash
+npx -y @smithery/cli install @SpaceStation09/relate-account-mcp-python --client claude
+```
+
 ### 安装依赖
 
 ``` bash
