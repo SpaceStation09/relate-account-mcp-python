@@ -1,5 +1,7 @@
 # Relate Account (Python version)
 
+[![smithery badge](https://smithery.ai/badge/@SpaceStation09/relate-account-mcp-python)](https://smithery.ai/server/@SpaceStation09/relate-account-mcp-python)
+
 本项目是 [relate-account-mcp](https://github.com/fengshanshan/relate-account-mcp/tree/main) 的python实现。
 
 ## Tools
