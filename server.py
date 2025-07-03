@@ -2,17 +2,19 @@ from fastmcp import FastMCP
 from pydantic import Field
 import requests
 import os
-from platforms import Platform
-from query import IDENTITY_QUERY
+from utils.platforms import Platform
+from utils.query import IDENTITY_QUERY
 from dotenv import load_dotenv
 from typing import Annotated
+from utils.simple_cache import SimpleCache
 
 mcp = FastMCP("relate-account")
 load_dotenv()
 
 url = os.getenv("DATA_API_URL", "https://graph.web3.bio/graphql")
+cache = SimpleCache()
 
-def execute_graphql_query(query_obj: dict, url: str, timeout: int = 10) -> dict:
+def execute_graphql_query(query_obj: dict, url: str, timeout: int = 10000) -> dict:
 	headers = {
 		"Content-Type": "application/json",
 		"User-Agent": "relate-account-mcp/3.0.0",
@@ -37,6 +39,11 @@ def execute_graphql_query(query_obj: dict, url: str, timeout: int = 10) -> dict:
 		return json_data.get("data", {})
 	except Exception as e:
 		return {"error": f"Query failed: {e}"}
+	
+def create_cache_key(platform: str, identity: str) -> str:
+	cache_key = f"{platform}:{identity}".lower()
+	return cache_key
+
 
 @mcp.tool(
 		name="get-related-address",
@@ -51,7 +58,13 @@ def relate_account(
 		"query": IDENTITY_QUERY,
 		"variables": {"platform": platform.value, "identity": identity}
 	}
+	cache_key = create_cache_key(platform.value, identity)
+	cached_data = cache.get(cache_key)
+	if cached_data is not None:
+		return str(cached_data)
+
 	data = execute_graphql_query(query_obj, url)
+	cache.set(cache_key, data)
 	return str(data)
 
 if __name__ == "__main__":
